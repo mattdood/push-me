@@ -1,0 +1,7 @@
+# Repos have their home directories concatenated to the front of the
+# path. Any repository path listed below will have `/home/<username>/` appended
+# to the front.
+repos:
+  - "my/directory/here"
+  - "one/other/directory"
+
