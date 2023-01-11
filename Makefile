@@ -1,4 +1,5 @@
 BINARY_NAME=push-me
+BINARY_PATH=/${GOPATH}/bin/push-me
 GO_BUILD_ENV=CGO_ENABLED=0 GOOOS=linux GOARCH=amd64
 
 all: fmt vet lint test build  ## fmt, vet, lint, test, build
@@ -6,8 +7,21 @@ all: fmt vet lint test build  ## fmt, vet, lint, test, build
 build:  ## Build binary package
 	${GO_BUILD_ENV} go build -v -o ${BINARY_NAME} .
 
-install:  ## Install package with go install
+install:  ## Install package with go install and create crontab task
 	${GO_BUILD_ENV} go install
+	output=$(crontab -l | grep "push-me")
+	if [ -n "$output" ]; then
+		echo "Already installed"
+	else
+		(crontab -l ; echo "0 * * * * ${BINARY_PATH}") | crontab -
+	fi
+
+uninstall:  ## Uninstall package and crontab task
+	rm ${BINARY_PATH}
+	output=$(crontab -l | grep "push-me")
+	if [ "${output}" != "" ]; then
+		(crontab -l | grep -v "0 * * * * ${BINARY_PATH}") | crontab -
+	fi
 
 fmt:  ## Run gofmt on all files
 	go fmt ./...
