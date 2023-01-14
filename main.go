@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"os"
 	"os/exec"
 	"time"
@@ -18,7 +17,7 @@ func NewConfig() (*Config, error) {
 	home, _ := os.UserHomeDir()
 	fullConfigPath := home + ConfigPath
 
-	configFile, err := ioutil.ReadFile(fullConfigPath)
+	configFile, err := os.ReadFile(fullConfigPath)
 	if err != nil {
 		return nil, fmt.Errorf("Error reading config file: %s", err)
 	}
@@ -99,8 +98,14 @@ func main() {
 	for _, repo := range config.Repos {
 		fmt.Println("Repository:", repo)
 
-		Add(repo)
-		Commit(repo)
-		Push(repo)
+		if err := Add(repo); err != nil {
+			fmt.Println("Git add returned an error")
+		}
+		if err := Commit(repo); err != nil {
+			fmt.Println("Git commit returned an error")
+		}
+		if err := Push(repo); err != nil {
+			fmt.Println("Git push returned an error")
+		}
 	}
 }
