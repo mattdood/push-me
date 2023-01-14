@@ -1,0 +1,24 @@
+# Release Go binary on tag push
+name: Release binary
+
+on:
+  push:
+    tags:
+      - v*
+
+jobs:
+
+  release:
+    name: Release binary for new version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: goreleaser/goreleaser-action@v4
+        with:
+          # either 'goreleaser' (default) or 'goreleaser-pro':
+          distribution: goreleaser
+          version: latest
+          args: release --rm-dist
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+

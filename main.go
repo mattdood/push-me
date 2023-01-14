@@ -96,8 +96,6 @@ func main() {
 
 	// Loop through the repos array
 	for _, repo := range config.Repos {
-		fmt.Println("Repository:", repo)
-
 		if err := Add(repo); err != nil {
 			fmt.Println("Git add returned an error")
 		}
