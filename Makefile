@@ -7,6 +7,9 @@ all: fmt vet lint test build  ## fmt, vet, lint, test, build
 build:  ## Build binary package
 	${GO_BUILD_ENV} go build -v -o ${BINARY_NAME} .
 
+init:
+	touch ~/.push-me-config.yml
+
 install:  ## Install package with go install and create crontab task
 	${GO_BUILD_ENV} go install
 
