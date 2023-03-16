@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Setup Go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v4
 
       - name: Fmt
         run: make fmt
@@ -32,7 +32,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Setup Go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v4
 
       - name: Vet
         run: make vet
@@ -45,7 +45,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Setup Go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v4
 
       - name: Golangci-lint
         uses: golangci/golangci-lint-action@v3
@@ -60,7 +60,7 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Setup Go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v4
 
       - name: Test
         run: make test
